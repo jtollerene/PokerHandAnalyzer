@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sequences sunburst</title>
+    <meta name="robots" content="noindex,nofollow">
+    <!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
+    <script src="d3.min.js"></script>
+    <script src="jquery-2.0.3.min.js"></script>
+    <script src="underscore-min.js"></script>
+    <link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="sequences.css"/>
+    <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="jquery.datepicker.css">
+  </head>
+  <body>
+    <div id="main">
+      <div class="row">
+        <div class="col-lg-12">
+          <div id="sequence"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <form id="inputs" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-6">Choose hero:</label>
+              <div class="col-sm-6">
+                <select id="hero" class="form-control">
+                  <option>Elon</option>
+                  <option>Jay</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-6">Choose opponent:</label>
+              <div class="col-sm-6">
+                <select id="opponent" class="form-control"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-6">Choose position:</label>
+              <div class="col-sm-6">
+                <select id="position" class="form-control">
+                  <option value="sb">Small Blind</option>
+                  <option value="bb">Big Blind</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-6">Choose game:</label>
+              <div class="col-sm-6">
+                <select id="game" class="form-control"><option>All</option></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-6">Choose stakes:</label>
+              <div class="col-sm-6">
+                <select id="stakes" class="form-control"><option>All</option></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-6">From:</label>
+              <div class="col-sm-6">
+                <input type="text" id="from" name="from">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-6">To:</label>
+              <div class="col-sm-6">
+                <input type="text" id="to" name="to">
+              </div>
+            </div>
+          </form>
+          <br><br><br><br>
+          <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-5">Files to upload:</label>
+              <div class="col-sm-7">
+                <input id="files" type="file" name="pokerfiles" class="form-control" multiple><br>
+                <input type="submit" name="Upload">    
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-8">
+          <div id="chart">
+            <span id="title">SB</span>
+            <div id="explanation" class="exp" style="visibility: hidden;">
+              <span id="percentage"></span><br/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="sidebar">
+      <input type="checkbox" id="togglelegend"> Legend<br/>
+      <div id="legend" style="visibility: hidden;"></div>
+    </div>
+    <script type="text/javascript" src="sequences.js"></script>
+    <script src="jquery.datepicker.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $( "#from" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 3,
+          onClose: function( selectedDate ) {
+            $( "#to" ).datepicker( "option", "minDate", selectedDate );
+          }
+        });
+        $( "#to" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 3,
+          onClose: function( selectedDate ) {
+            $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
